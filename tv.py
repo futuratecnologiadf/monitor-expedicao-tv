@@ -2,9 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 import time
-from pathlib import Path
 import psycopg2
-import json
 
 # ==================== CONFIGURAÇÃO STREAMLIT ====================
 st.set_page_config(
