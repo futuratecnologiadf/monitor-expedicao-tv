@@ -133,8 +133,8 @@ def fetch_sales_data(loja):
         df = pd.read_sql(QUERY, connection)
         connection.close()
         return df
-    except:
-        st.error(f"Erro de conexão: {e}")
+    except Exception as e:
+        st.error(f"Erro: {e}")
         return pd.DataFrame()
 
 # ==================== INTERFACE KANBAN ====================
@@ -144,6 +144,16 @@ def main():
     params = st.query_params
     loja = params.get("loja", "07")  # Pega a loja da URL ou usa '07' como padrão
 
+    try:
+        cfg = st.secrets["postgres"]
+        st.write(f"✅ Secrets OK - host: {cfg['host']}")
+        conn = psycopg2.connect(**cfg)
+        st.write("✅ Banco conectado!")
+        conn.close()
+    except Exception as e:
+        st.error(f"❌ Erro: {e}")
+        st.stop()
+    
     config_kanban = {
         'PEDIDO EMITIDO':   {"cor": "#CCCCCC", "icon": "💻"},
         'SEPARAÇÃO':     {"cor": "#FF2121", "icon": "📦"},
