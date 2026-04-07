@@ -134,6 +134,7 @@ def fetch_sales_data(loja):
         connection.close()
         return df
     except:
+        st.error(f"Erro de conexão: {e}")
         return pd.DataFrame()
 
 # ==================== INTERFACE KANBAN ====================
